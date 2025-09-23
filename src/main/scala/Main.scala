@@ -36,7 +36,21 @@ def match_history(): Unit = {
 
 
 def player(): Unit = {
+  println("")
 
+  var stay = true
+  while stay do {
+    getPlayer().foreach(p => println(p))
+    println("")
+
+    println("Enter: \n 'e' to edit Players \n 'd' to delete a Player \n 'q' to quit this window")
+    val text = readLine().charAt(0).toLower
+    text match {
+      case 'q' => stay = false
+      case 'e' => editPlayer()
+      case 'd' => deletePlayer()
+    }
+  }
 }
 
 
