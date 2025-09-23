@@ -1,4 +1,5 @@
 import scala.io.StdIn.readLine
+import java.io._
 
 class Article(var id: Int, var name: String, var price: Double, var comment: String) {
   override def toString: String =
@@ -15,7 +16,18 @@ def getArticle(): List[Article] = {
 }
 
 def createArticle(): Unit = {
+ // automatic id
+ val newId = if (articles.isEmpty) 1 else articles.map(_.id).max + 1
+ val name = readLine("Enter article name: ")
+ val price = readLine("Enter price: ").toDouble
+ val comment = readLine("Enter comment: ")
 
+ val newArticle = new Article(newId, name, price, comment)
+
+ articles = articles :+ newArticle
+
+ // save article
+  saveArticles()
 }
 
 def editArticle(): Unit = {

@@ -46,13 +46,14 @@ def artikel(): Unit = {
   var done = false
   while !done do {
     getArticle().foreach(a => println(a))
-    println("Enter: \n 'c' for Create Article \n 'e' for edit Article \n 'd' for Delete")
+    println("Enter: \n 'c' for Create Article \n 'e' for edit Article \n 'd' for Delete \n 'q' to quit")
 
     val input = readLine().charAt(0).toLower
     input match
       case 'c' => createArticle()
       case 'e' => editArticle()
       case 'd' => deleteArticle()
+      case 'q' => done = finish(done)
   }
 
 }
