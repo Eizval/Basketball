@@ -47,10 +47,17 @@ def player(): Unit = {
     val text = readLine().charAt(0).toLower
     text match {
       case 'q' => stay = false
-      case 'e' => editPlayer()
+      case 'e' => val p = choosePlayer()
+        editPlayer(p)
       case 'd' => deletePlayer()
     }
   }
+}
+
+def choosePlayer(): Player = {
+  getPlayer().foreach(p => println(p.id + " " + p.name))
+  val chooseThePlayer = readLine().toInt
+  getPlayer().filter(p => p.id == chooseThePlayer).head
 }
 
 
