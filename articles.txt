@@ -1,0 +1,3 @@
+1;Basketball;6.5;Its a Basketball
+2;T-Shirt;21.99;a XXL T-Shirt
+4;testerei;144.0;testerei
