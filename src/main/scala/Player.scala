@@ -28,8 +28,11 @@ def editPlayer(player: Player): Unit = {
 }
 
 
-def deletePlayer(): Unit = {
-
+def deletePlayer(id: Int): Unit = {
+  val deletedPlayer = players.filter(p => p.id == id)
+  players = players.filter(p => p.id != id)
+  println("\u001b[31mSuccsesfully deleted:\u001b[0m")
+  println(s"\u001b[31m ${deletedPlayer}\u001b[0m")
 }
 
 def addPlayer(string: String): Unit = {

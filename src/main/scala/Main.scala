@@ -49,7 +49,7 @@ def player(): Unit = {
       case 'q' => stay = false
       case 'e' => val p = choosePlayer()
         editPlayer(p)
-      case 'd' => deletePlayer()
+      case 'd' => delPlayer()
       case 'a' => newPlayer()
     }
   }
@@ -65,6 +65,13 @@ def newPlayer(): Unit = {
   println("Give me a new player like 'Name PlayerNumber age Role Role'")
   val player = readLine()
   addPlayer(player)
+}
+
+def delPlayer(): Unit = {
+  println("Give me Player id to delete that Player, like: 1")
+  getPlayer().foreach(p => println(p))
+  val toDeletePlayer = readLine()
+  deletePlayer(toDeletePlayer.toInt)
 }
 
 
