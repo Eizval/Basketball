@@ -37,7 +37,7 @@ def deletePlayer(id: Int): Unit = {
 
 def addPlayer(string: String): Unit = {
   val value = string.split(" ")
-  val roles = value.drop(2).toList
+  val roles = value.drop(3).toList
   val newPlayer = new Player(players.length +1, value(0), value(1).toInt, value(2).toInt, roles)
   players = players :+ newPlayer
   coloredPrint("Succsesfully added", "green")
