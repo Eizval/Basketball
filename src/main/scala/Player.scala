@@ -1,4 +1,4 @@
-class Player (var id: Int, var name: String, var playerNumber: Int, var age: Int, var playerType: List[String]) {
+class Player (val id: Int, val name: String, val playerNumber: Int, val age: Int, val playerType: List[String]) {
   override def toString: String =
     s"Player(id=$id, name=$name, number=$playerNumber, age=$age, types=${playerType.mkString(", ")})"
 }

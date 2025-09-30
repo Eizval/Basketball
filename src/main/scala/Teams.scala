@@ -1,3 +1,3 @@
-class Teams (var id: Int, name: String, var teammates: List[Int]){
+class Teams (val id: Int, val name: String, val teammates: List[Int]){
 
 }
