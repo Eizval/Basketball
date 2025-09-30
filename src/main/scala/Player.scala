@@ -31,8 +31,8 @@ def editPlayer(player: Player): Unit = {
 def deletePlayer(id: Int): Unit = {
   val deletedPlayer = players.filter(p => p.id == id)
   players = players.filter(p => p.id != id)
-  println("\u001b[31mSuccsesfully deleted:\u001b[0m")
-  println(s"\u001b[31m ${deletedPlayer}\u001b[0m")
+  coloredPrint("Succsesfully deleted", "red")
+  coloredPrint(s"\t $deletedPlayer", "red")
 }
 
 def addPlayer(string: String): Unit = {
@@ -40,7 +40,7 @@ def addPlayer(string: String): Unit = {
   val roles = value.drop(2).toList
   val newPlayer = new Player(players.length +1, value(0), value(1).toInt, value(2).toInt, roles)
   players = players :+ newPlayer
-  println("\u001b[32mSuccsesfully added:\u001b[0m")
-  println(s"\u001b[32m ${players.last}\u001b[0m")
+  coloredPrint("Succsesfully added", "green")
+  coloredPrint(s"\t ${players.last}", "green")
   println("")
 }

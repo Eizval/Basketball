@@ -95,4 +95,20 @@ def finish(done: Boolean): Boolean = {
   true
 }
 
+def coloredPrint(text: String, color: String): Unit = {
+  val colorCode = color.toLowerCase match {
+    case "black"   => "\u001b[30m"
+    case "red"     => "\u001b[31m"
+    case "green"   => "\u001b[32m"
+    case "yellow"  => "\u001b[33m"
+    case "blue"    => "\u001b[34m"
+    case "magenta" => "\u001b[35m"
+    case "cyan"    => "\u001b[36m"
+    case "white"   => "\u001b[37m"
+    case _         => "\u001b[0m" // Standardfarbe bei ungültiger Eingabe
+  }
+
+  val reset = "\u001b[0m"
+  println(s"$colorCode$text$reset")
+}
 
