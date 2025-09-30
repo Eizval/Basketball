@@ -38,7 +38,7 @@ def teamsView(): Unit = {
         editTeams(t)
       case  'd' => val t = chooseTeam()
         deleteTeams(t)
-      case  'a' => None
+      case  'a' => newTeam()
     }
   }
 }
@@ -47,6 +47,12 @@ def chooseTeam(): Team = {
   getTeams().foreach(p => println(p.id + " " + p.name))
   val chooseTheTeam = readLine().toInt
   getTeams().filter(p => p.id == chooseTheTeam).head
+}
+
+def newTeam(): Unit = {
+  println("Give me a new team like 'Name teammates teammates'")
+  val team = readLine()
+  addTeams(team)
 }
 
 def match_history(): Unit = {
