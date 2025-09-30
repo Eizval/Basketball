@@ -14,7 +14,7 @@ def getTeams(): List[Team] = {
 }
 
 def editTeams(): Unit = {
-  
+
 }
 
 def deleteTeams(team: Team): Unit = {
@@ -25,6 +25,12 @@ def deleteTeams(team: Team): Unit = {
   println("")
 }
 
-def addTeams(): Unit = {
-
+def addTeams(string: String): Unit = {
+  val value = string.split(" ")
+  val teammates = value.drop(1).map(t => t.toInt).toList
+  val newTeam = new Team(teams.length + 1, value(0), teammates)
+  teams = teams :+ newTeam
+  coloredPrint("Succsesfully added", "green")
+  coloredPrint(s"\t ${teams.last}", "green")
+  println("")
 }
