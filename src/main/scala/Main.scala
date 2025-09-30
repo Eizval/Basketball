@@ -34,9 +34,10 @@ def teamsView(): Unit = {
     val text = readLine().charAt(0).toLower
     text match {
       case  'q' => stay = false
-      case  'e' => None
-      case  'd' => val delTeam = chooseTeam()
-        deleteTeams(delTeam)
+      case  'e' => val t = chooseTeam()
+        editTeams(t)
+      case  'd' => val t = chooseTeam()
+        deleteTeams(t)
       case  'a' => None
     }
   }
