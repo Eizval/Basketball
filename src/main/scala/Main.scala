@@ -43,13 +43,14 @@ def player(): Unit = {
     getPlayer().foreach(p => println(p))
     println("")
 
-    println("Enter: \n 'e' to edit Players \n 'd' to delete a Player \n 'q' to quit this window")
+    println("Enter: \n 'e' to edit Players \n 'd' to delete a Player \n 'a' to add a new Player \n 'q' to quit this window ")
     val text = readLine().charAt(0).toLower
     text match {
       case 'q' => stay = false
       case 'e' => val p = choosePlayer()
         editPlayer(p)
       case 'd' => deletePlayer()
+      case 'a' => newPlayer()
     }
   }
 }
@@ -58,6 +59,12 @@ def choosePlayer(): Player = {
   getPlayer().foreach(p => println(p.id + " " + p.name))
   val chooseThePlayer = readLine().toInt
   getPlayer().filter(p => p.id == chooseThePlayer).head
+}
+
+def newPlayer(): Unit = {
+  println("Give me a new player like 'Name PlayerNumber age Role Role'")
+  val player = readLine()
+  addPlayer(player)
 }
 
 

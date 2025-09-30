@@ -31,3 +31,13 @@ def editPlayer(player: Player): Unit = {
 def deletePlayer(): Unit = {
 
 }
+
+def addPlayer(string: String): Unit = {
+  val value = string.split(" ")
+  val roles = value.drop(2).toList
+  val newPlayer = new Player(players.length +1, value(0), value(1).toInt, value(2).toInt, roles)
+  players = players :+ newPlayer
+  println("\u001b[32mSuccsesfully added:\u001b[0m")
+  println(s"\u001b[32m ${players.last}\u001b[0m")
+  println("")
+}
