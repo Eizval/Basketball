@@ -28,11 +28,12 @@ def editPlayer(player: Player): Unit = {
 }
 
 
-def deletePlayer(id: Int): Unit = {
-  val deletedPlayer = players.filter(p => p.id == id)
-  players = players.filter(p => p.id != id)
+def deletePlayer(player: Player): Unit = {
+  val deletedPlayer = players.filter(p => p.id == player.id)
+  players = players.filter(p => p.id != player.id)
   coloredPrint("Succsesfully deleted", "red")
   coloredPrint(s"\t $deletedPlayer", "red")
+  println("")
 }
 
 def addPlayer(string: String): Unit = {

@@ -49,7 +49,8 @@ def player(): Unit = {
       case 'q' => stay = false
       case 'e' => val p = choosePlayer()
         editPlayer(p)
-      case 'd' => delPlayer()
+      case 'd' => val p = choosePlayer()
+        deletePlayer(p)
       case 'a' => newPlayer()
     }
   }
@@ -67,12 +68,12 @@ def newPlayer(): Unit = {
   addPlayer(player)
 }
 
-def delPlayer(): Unit = {
-  println("Give me Player id to delete that Player, like: 1")
-  getPlayer().foreach(p => println(p))
-  val toDeletePlayer = readLine()
-  deletePlayer(toDeletePlayer.toInt)
-}
+//def delPlayer(): Unit = {
+//  println("Give me Player id to delete that Player, like: 1")
+//  getPlayer().foreach(p => println(p))
+//  val toDeletePlayer = readLine()
+//  deletePlayer(toDeletePlayer.toInt)
+//}
 
 
 def verein(): Unit = {
