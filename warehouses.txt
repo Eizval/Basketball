@@ -1,0 +1,2 @@
+1;Bern;BernerBasketball;1
+2;Earth;RoyalWarehous;
