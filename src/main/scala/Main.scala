@@ -40,7 +40,7 @@ def player(): Unit = {
 
   var stay = true
   while stay do {
-    getPlayer().foreach(p => println(p))
+    getPlayer().foreach(p => coloredPrint(s"$p", "cyan"))
     println("")
 
     println("Enter: \n 'e' to edit Players \n 'd' to delete a Player \n 'a' to add a new Player \n 'q' to quit this window ")

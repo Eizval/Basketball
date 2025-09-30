@@ -1,4 +1,6 @@
-class Player (val id: Int, val name: String, val playerNumber: Int, val age: Int, val playerType: List[String]) {
+import scala.io.StdIn.readLine
+
+case class Player (val id: Int, val name: String, val playerNumber: Int, val age: Int, val playerType: List[String]) {
   override def toString: String =
     s"Player(id=$id, name=$name, number=$playerNumber, age=$age, types=${playerType.mkString(", ")})"
 }
@@ -17,14 +19,36 @@ def getPlayer(): List[Player] = {
 def editPlayer(player: Player): Unit = {
   println(player)
   println("")
-  println("Give me the New values like => name: paul, number: 2, age: 17, type: Coach")
-//Logic in here
+  println("Give me the New values like => name paul, number 2, age 17, type Coach")
+  val text = readLine()
+  val value = text.split(",").map(_.trim).toList
 
-//
+  val pairs: Map[String, String] = value.map { pair =>
+    val Array(k, v) = pair.split(" ").map(_.trim)
+    (k.toLowerCase, v)
+  }.toMap
+
+  val newName = pairs.getOrElse("name", player.name)
+  val newNumber = pairs.get("number").map(_.toInt).getOrElse(player.playerNumber)
+  val newAge = pairs.get("age").map(_.toInt).getOrElse(player.age)
+  val newType = pairs.get("type").map(t => List(t)).getOrElse(player.playerType)
+
+  val alteredPlayer = player.copy(
+    name = newName,
+    playerNumber = newNumber,
+    age = newAge,
+    playerType = newType
+  )
+
+  // Spieler in Liste ersetzen
+  players = players.map { p =>
+    if (p.id == player.id) alteredPlayer else p
+  }
+
   println("")
-  println("Edited player")
+  coloredPrint("Edited player", "yellow")
+  coloredPrint(s"\t $player", "yellow")
   println("")
-  println(player)
 }
 
 
