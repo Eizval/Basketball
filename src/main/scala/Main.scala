@@ -100,8 +100,8 @@ def verein(): Unit = {
     val text = readLine().charAt(0).toLower
     text match {
       case 'q' => stay = false
-      case 'e' => val p = choosePlayer()
-        editPlayer(p)
+      case 'e' => val p = chooseVerein()
+        editVerein(p)
       case 'd' => val p = choosePlayer()
         deletePlayer(p)
       case 'a' => newPlayer()
@@ -109,6 +109,11 @@ def verein(): Unit = {
   }
 }
 
+def chooseVerein(): Verein = {
+  getVerein().foreach(p => println(p.id + " " + p.name))
+  val chooseTheVerein = readLine().toInt
+  getVerein().filter(p => p.id == chooseTheVerein).head
+}
 
 def lager(): Unit = {
   var done = false
