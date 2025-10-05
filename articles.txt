@@ -1,2 +1,2 @@
 1;Basketball;6.5;It's a Basketball
-3;Basketball schuhe;523.99;dini schwiger müter
+2;T-Shirt;21.99;a XXL T-Shirt

@@ -4,13 +4,12 @@ import scala.io.StdIn.readLine
   var done = false
   while !done do {
     try
-      println("Enter: \n 't' for Teams \n 'm' for Matches \n 'p' for player \n 'v' for Verein \n 'l' for Lager \n 'a' for Artikel \n 'q' to quit")
+      println("Enter: \n 't' for Teams \n 'p' for player \n 'v' for Verein \n 'l' for Lager \n 'a' for Artikel \n 'q' to quit")
 
       val input = readLine().charAt(0).toLower
       input match
         case 'q' => done = finish(done)
         case 't' => teamsView()
-        case 'm' => match_history()
         case 'p' => player()
         case 'v' => verein()
         case 'l' => lager()
@@ -56,11 +55,6 @@ def newTeam(): Unit = {
   addTeams(team)
 }
 
-def match_history(): Unit = {
-  println("match")
-}
-
-
 def player(): Unit = {
   println("")
 
@@ -94,16 +88,25 @@ def newPlayer(): Unit = {
   addPlayer(player)
 }
 
-//def delPlayer(): Unit = {
-//  println("Give me Player id to delete that Player, like: 1")
-//  getPlayer().foreach(p => println(p))
-//  val toDeletePlayer = readLine()
-//  deletePlayer(toDeletePlayer.toInt)
-//}
-
-
 def verein(): Unit = {
-  println("verein")
+  println("")
+
+  var stay = true
+  while stay do {
+    getVerein().foreach(p => coloredPrint(s"$p", "cyan"))
+    println("")
+
+    println("Enter: \n 'e' to edit Verein \n 'd' to delete a Verein \n 'a' to add a new Verein \n 'q' to quit this window ")
+    val text = readLine().charAt(0).toLower
+    text match {
+      case 'q' => stay = false
+      case 'e' => val p = choosePlayer()
+        editPlayer(p)
+      case 'd' => val p = choosePlayer()
+        deletePlayer(p)
+      case 'a' => newPlayer()
+    }
+  }
 }
 
 
