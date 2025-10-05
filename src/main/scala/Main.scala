@@ -102,8 +102,8 @@ def verein(): Unit = {
       case 'q' => stay = false
       case 'e' => val p = chooseVerein()
         editVerein(p)
-      case 'd' => val p = choosePlayer()
-        deletePlayer(p)
+      case 'd' => val p = chooseVerein()
+        deleteVerein(p)
       case 'a' => addVerein()
     }
   }

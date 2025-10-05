@@ -102,3 +102,12 @@ def addVerein(): Unit = {
   coloredPrint(s"\t $newVerein", "green")
   println("")
 }
+
+def deleteVerein(verein: Verein): Unit = {
+  vereine = vereine.filterNot(_.id == verein.id)
+
+  println("")
+  coloredPrint("Deleted Verein", "red")
+  coloredPrint(s"\t $verein", "red")
+  println("")
+}
