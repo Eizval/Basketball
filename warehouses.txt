@@ -1,2 +1,2 @@
-1;Bern;BernerBasketball;1
-2;Earth;RoyalWarehous;
+2;Earth;RoyalWarehous;1
+3;Wysima;Timerien;

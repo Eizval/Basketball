@@ -51,3 +51,127 @@ def loadWarehouses(): Unit = {
     }.toList
   }
 }
+
+// Move Artikel
+def moveArticleInWarehouse(): Unit = {
+  // Alle Artikel anzeigen (mit ausführlicher Beschreibung)
+  println("Verfügbare Artikel:")
+  getArticle().foreach(a => println(a.toString)) // Zeigt alle Artikel mit Details
+
+  var validId = false
+  var id = 0
+
+  // Schritt 1: Lager-ID eingeben und prüfen, ob eine Zahl
+  while (!validId) {
+    val input = readLine("Bitte Lager-ID eingeben: ")
+    try {
+      id = input.toInt
+      if (warehouse.exists(_.id == id)) {
+        validId = true
+      } else {
+        println("Kein Warehouse mit dieser ID.")
+      }
+    } catch {
+      case _: NumberFormatException =>
+        println("Bitte eine Zahl eingeben.")
+    }
+  }
+
+  val warehouseOpt = warehouse.find(_.id == id)
+  warehouseOpt match {
+    case Some(w) =>
+      var done = false
+      while (!done) {
+        println(s"Aktuelle Artikel-IDs im Warehouse: ${w.articleIds}")
+        val input = readLine("Artikel-ID hinzufügen (oder 'q' zum Beenden): ")
+        if (input.toLowerCase == "q") {
+          done = true
+        } else {
+          try {
+            val artId = input.toInt
+            // Optional prüfen, ob diese Artikel-ID wirklich existiert:
+            if (getArticle().exists(_.id == artId)) {
+              w.articleIds = w.articleIds :+ artId
+              println(s"Artikel $artId hinzugefügt.")
+              saveWarehouses()
+            } else {
+              println("Diese Artikel-ID existiert nicht!")
+            }
+          } catch {
+            case _: NumberFormatException =>
+              println("Bitte eine Zahl eingeben.")
+          }
+        }
+      }
+    case None => println("Warehouse nicht gefunden.")
+  }
+}
+
+
+// delete warehous
+def deleteWarehouse(): Unit = {
+  var validId = false
+  var id = 0
+
+  while (!validId) {
+    val input = readLine("Bitte die ID des zu löschenden Warehouses eingeben: ")
+    try {
+      id = input.toInt
+      validId = true
+    } catch {
+      case _: NumberFormatException =>
+        println("Bitte eine Zahl eingeben.")
+    }
+  }
+
+  val warehouseOpt = warehouse.find(_.id == id)
+
+  warehouseOpt match {
+    case Some(w) =>
+      if (w.articleIds.isEmpty) {
+        // Warehouse löschen
+        warehouse = warehouse.filterNot(_.id == id)
+        println(s"Warehouse gelöscht: $w")
+        saveWarehouses()
+      } else {
+        println("Warehouse enthält noch Artikel.")
+        val input = readLine("Möchten Sie einen Artikel löschen? (yes/no): ")
+        if (input.toLowerCase == "yes") {
+          var done = false
+          while (!done && w.articleIds.nonEmpty) {
+            println("Artikel-IDs im Warehouse: " + w.articleIds.mkString(", "))
+            val delInput = readLine("Geben Sie die zu löschende Artikel-ID ein (oder 'q' zum Beenden): ")
+            if (delInput.toLowerCase == "q") {
+              done = true
+            } else {
+              try {
+                val artId = delInput.toInt
+                if (w.articleIds.contains(artId)) {
+                  w.articleIds = w.articleIds.filterNot(_ == artId)
+                  println(s"Artikel $artId entfernt.")
+                  saveWarehouses()
+                  if (w.articleIds.isEmpty) {
+                    println("Alle Artikel entfernt. Warehouse kann jetzt gelöscht werden!")
+                    // Warehouse löschen
+                    warehouse = warehouse.filterNot(_.id == id)
+                    println(s"Warehouse gelöscht: $w")
+                    saveWarehouses()
+                    done = true
+                  }
+                } else {
+                  println("Diese Artikel-ID ist nicht vorhanden.")
+                }
+              } catch {
+                case _: NumberFormatException =>
+                  println("Bitte eine Zahl eingeben.")
+              }
+            }
+          }
+        } else {
+          println("Warehouse wurde nicht gelöscht.")
+        }
+      }
+    case None =>
+      println(s"Kein Warehouse mit ID $id gefunden.")
+  }
+}
