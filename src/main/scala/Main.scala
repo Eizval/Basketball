@@ -45,6 +45,7 @@ def teamsView(): Unit = {
 
 def chooseTeam(): Team = {
   printTeamsRecursive(getTeams())
+  println("Give me the id as a number like '1'")
   val chooseTheTeam = readLine().toInt
   getTeams().filter(p => p.id == chooseTheTeam).head
 }
