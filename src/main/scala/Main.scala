@@ -28,7 +28,7 @@ import scala.io.StdIn.readLine
 def teamsView(): Unit = {
   var stay = true
   while stay do {
-    getTeams().foreach(p => coloredPrint(s"$p", "cyan"))
+    printTeamsRecursive(getTeams())
     println("")
     println("Enter: \n 'e' to edit a Team \n 'd' to delete a Team \n 'a' to add a new Team \n 'q' to quit this window ")
     val text = readLine().charAt(0).toLower
@@ -44,7 +44,7 @@ def teamsView(): Unit = {
 }
 
 def chooseTeam(): Team = {
-  getTeams().foreach(p => println(p.id + " " + p.name))
+  printTeamsRecursive(getTeams())
   val chooseTheTeam = readLine().toInt
   getTeams().filter(p => p.id == chooseTheTeam).head
 }

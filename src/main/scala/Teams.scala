@@ -15,6 +15,15 @@ def getTeams(): List[Team] = {
   teams
 }
 
+def printTeamsRecursive(teams: List[Team]): Unit = {
+  if (teams.nonEmpty) {
+    coloredPrint(s"${teams.head}", "cyan")
+    printTeamsRecursive(teams.tail) // recursive call
+  }
+}
+
+
+
 def editTeams(team: Team): Unit = {
   println(team)
   println("")
