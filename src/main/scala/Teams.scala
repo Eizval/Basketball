@@ -1,12 +1,12 @@
 import scala.io.StdIn.readLine
 
-case class Team (val id: Int, val name: String, val teammates: List[Int]){
+case class Team (val id: Int, val name: String, val teammates: List[Player]){
   override def toString: String =
     s"Team(id = $id, name = $name, teammates = ${teammates.mkString(", ")})"
 }
 
-val team1 = new Team(1, "KTV", List(13))
-val team2 = new Team(2, "TTV", List(13,27))
+val team1 = new Team(1, "KTV", getPlayer().filter(p => p.id == 13))
+val team2 = new Team(2, "TTV", getPlayer().filter(p => p.id == 13 || p.id == 27))
 var teams: List[Team] = List(team1,team2)
 
 
@@ -34,11 +34,13 @@ def editTeams(team: Team): Unit = {
   val newName = pairs.getOrElse("name", team.name)
 
   val newTeammates =
-    pairs.get("teammates")
-      .map(_.trim)
-      .filter(_.nonEmpty)
-      .map(_.split("\\s+").toList.map(_.toInt))
-      .getOrElse(team.teammates)
+    pairs.get("teammates") match {
+      case Some(teammateStr) if teammateStr.trim.nonEmpty =>
+        val ids = teammateStr.trim.split("\\s+").toList.map(_.toInt)
+        getPlayer().filter(p => ids.contains(p.id)) // ✅ get List[Player]
+      case _ =>
+        team.teammates // ✅ keep old teammates if not provided
+    }
 
   val alteredTeam = team.copy(name = newName, teammates = newTeammates)
 
@@ -61,7 +63,8 @@ def deleteTeams(team: Team): Unit = {
 
 def addTeams(string: String): Unit = {
   val value = string.split(" ")
-  val teammates = value.drop(1).map(t => t.toInt).toList
+  val teammateIds = value.drop(1).map(_.toInt).toList
+  val teammates = getPlayer().filter(p => teammateIds.contains(p.id))
   val newTeam = new Team(teams.length + 1, value(0), teammates)
   teams = teams :+ newTeam
   coloredPrint("Succsesfully added", "green")
