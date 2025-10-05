@@ -61,3 +61,44 @@ def editVerein(verein: Verein): Unit = {
   coloredPrint(s"\t $alteredVerein", "yellow")
   println("")
 }
+
+def addVerein(): Unit = {
+  println("Add a new Verein")
+  println("Give me the values like => name NewName, teamIds 1 2 3, warehouseIds 1 2")
+  val text = readLine()
+  val value = text.split(",").map(_.trim).toList
+
+  val pairs: Map[String, String] =
+    value.flatMap { pair =>
+      pair.split("\\s+", 2) match {
+        case Array(k, v) => Some(k.toLowerCase -> v)
+        case Array(k)    => Some(k.toLowerCase -> "")
+        case _           => None
+      }
+    }.toMap
+
+  val name = pairs.getOrElse("name", "Unnamed Verein")
+
+  val teamIds =
+    pairs.get("teamids")
+      .map(_.trim)
+      .filter(_.nonEmpty)
+      .map(_.split("\\s+").toList.map(_.toInt))
+      .getOrElse(List())
+
+  val warehouseIds =
+    pairs.get("warehouseids")
+      .map(_.trim)
+      .filter(_.nonEmpty)
+      .map(_.split("\\s+").toList.map(_.toInt))
+      .getOrElse(List())
+
+  val newId = if (vereine.isEmpty) 1 else vereine.map(_.id).max + 1
+  val newVerein = Verein(newId, name, teamIds, warehouseIds)
+  vereine = vereine :+ newVerein
+
+  println("")
+  coloredPrint("Added new Verein", "green")
+  coloredPrint(s"\t $newVerein", "green")
+  println("")
+}
