@@ -56,7 +56,7 @@ def loadWarehouses(): Unit = {
 def moveArticleInWarehouse(): Unit = {
   // Alle Artikel anzeigen (mit ausführlicher Beschreibung)
   println("Verfügbare Artikel:")
-  getArticle().foreach(a => println(a.toString)) // Zeigt alle Artikel mit Details
+  getArticle().foreach(a => println(a.toString))
 
   var validId = false
   var id = 0
@@ -77,23 +77,27 @@ def moveArticleInWarehouse(): Unit = {
     }
   }
 
-  val warehouseOpt = warehouse.find(_.id == id)
-  warehouseOpt match {
+  // Finde das Warehouse
+  warehouse.find(_.id == id) match {
     case Some(w) =>
+      // Wir duplizieren die IDs in eine lokale Variable
+      var updatedArticleIds = w.articleIds
       var done = false
       while (!done) {
-        println(s"Aktuelle Artikel-IDs im Warehouse: ${w.articleIds}")
+        println(s"Aktuelle Artikel-IDs im Warehouse: ${if (updatedArticleIds.isEmpty) "-" else updatedArticleIds.mkString(", ")}")
         val input = readLine("Artikel-ID hinzufügen (oder 'q' zum Beenden): ")
         if (input.toLowerCase == "q") {
           done = true
         } else {
           try {
             val artId = input.toInt
-            // Optional prüfen, ob diese Artikel-ID wirklich existiert:
             if (getArticle().exists(_.id == artId)) {
-              w.articleIds = w.articleIds :+ artId
-              println(s"Artikel $artId hinzugefügt.")
-              saveWarehouses()
+              if (!updatedArticleIds.contains(artId)) {
+                updatedArticleIds = updatedArticleIds :+ artId
+                println(s"Artikel $artId hinzugefügt.")
+              } else {
+                println("Artikel ist schon im Warehouse.")
+              }
             } else {
               println("Diese Artikel-ID existiert nicht!")
             }
@@ -103,9 +107,18 @@ def moveArticleInWarehouse(): Unit = {
           }
         }
       }
-    case None => println("Warehouse nicht gefunden.")
+      // Warehouse-Liste aktualisieren (neues Objekt mit aktualisierter Artikel-Liste)
+      warehouse = warehouse.map(wh =>
+        if (wh.id == id) new Warehouse(wh.id, wh.location, wh.name, updatedArticleIds)
+        else wh
+      )
+      saveWarehouses()
+      println(s"Endgültige Artikel-IDs: ${if (updatedArticleIds.isEmpty) "-" else updatedArticleIds.mkString(", ")}")
+    case None =>
+      println("Warehouse nicht gefunden.")
   }
 }
+
 
 
 // delete warehous
