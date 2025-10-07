@@ -10,12 +10,12 @@ val player2 = new Player(27, "Bob", 5, 28, List("Coach"))
 var players: List[Player] = List(player1, player2)
 
 
-
+// Returns the Player list
 def getPlayer(): List[Player] = {
   players
 }
 
-
+// Request to give the parameters of the new Player
 def editPlayer(player: Player): Unit = {
   println(player)
   println("")
@@ -51,7 +51,7 @@ def editPlayer(player: Player): Unit = {
   println("")
 }
 
-
+// You give him a Player and it replaces the list without that player
 def deletePlayer(player: Player): Unit = {
   val deletedPlayer = players.filter(p => p.id == player.id)
   players = players.filter(p => p.id != player.id)
@@ -60,6 +60,7 @@ def deletePlayer(player: Player): Unit = {
   println("")
 }
 
+// You give a specific player which will be altered to the parameters your about to type in
 def addPlayer(string: String): Unit = {
   val value = string.split(" ")
   val roles = value.drop(3).toList
