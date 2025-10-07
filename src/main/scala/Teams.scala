@@ -22,8 +22,6 @@ def printTeamsRecursive(teams: List[Team]): Unit = {
   }
 }
 
-
-
 def editTeams(team: Team): Unit = {
   println(team)
   println("")
@@ -61,7 +59,6 @@ def editTeams(team: Team): Unit = {
   println("")
 }
 
-
 def deleteTeams(team: Team): Unit = {
   val deletedTeam = teams.filter(p => p.id == team.id)
   teams = teams.filter(p => p.id != team.id)
@@ -72,9 +69,10 @@ def deleteTeams(team: Team): Unit = {
 
 def addTeams(string: String): Unit = {
   val value = string.split(" ")
+  val idOfLastTeam = teams.last.id
   val teammateIds = value.drop(1).map(_.toInt).toList
   val teammates = getPlayer().filter(p => teammateIds.contains(p.id))
-  val newTeam = new Team(teams.length + 1, value(0), teammates)
+  val newTeam = new Team(idOfLastTeam + 1, value(0), teammates)
   teams = teams :+ newTeam
   coloredPrint("Succsesfully added", "green")
   coloredPrint(s"\t ${teams.last}", "green")
