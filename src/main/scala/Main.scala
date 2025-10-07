@@ -130,7 +130,6 @@ def lager(): Unit = {
   }
 }
 
-
 def artikel(): Unit = {
   var done = false
   while !done do {
@@ -146,7 +145,6 @@ def artikel(): Unit = {
   }
 
 }
-
 
 def finish(done: Boolean): Boolean = {
   println("Good Bye")
